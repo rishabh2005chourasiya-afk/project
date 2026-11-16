@@ -1,0 +1,19 @@
+{
+  "name": "retro-video-game-portfolio",
+  "version": "1.0.0",
+  "description": "A retro video game portfolio for Rishabh: Projects as levels, skills as power-ups, black & white arcade styling, mobile-friendly.",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "serve": "npx serve . -l 3000"
+  },
+  "keywords": [
+    "portfolio",
+    "retro",
+    "8-bit",
+    "video-game",
+    "black-and-white",
+    "arcade"
+  ],
+  "author": "Rishabh",
+  "license": "MIT"
+}

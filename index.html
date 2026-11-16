@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>RISHABH // RETRO VIDEO GAME PORTFOLIO</title>
+  <meta name="description" content="Retro video game portfolio of Rishabh - Level Designer & Full-Stack Software Craftsman. Projects as levels, skills as power-ups.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👾</text></svg>">
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- 📺 1. RETRO CRT SCANLINE & PHOSPHOR OVERLAY -->
+  <!-- ========================================================================= -->
+  <div id="crt-screen-overlay" class="crt-overlay crt-enabled" aria-hidden="true"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 🎮 2. RETRO ARCADE HUD (TOP NAVIGATION / CONTROLLER) -->
+  <!-- ========================================================================= -->
+  <header class="retro-hud" role="banner">
+    <div class="hud-inner">
+      <!-- Player 1 Identification -->
+      <a href="#hero" class="hud-player-badge sound-btn" aria-label="Go to Top">
+        <span class="hud-avatar-icon" role="img" aria-label="Player Icon">👾</span>
+        <div class="hud-player-info">
+          <span class="hud-tag">1UP // PLAYER 1</span>
+          <span id="hud-player-name" class="hud-name">RISHABH</span>
+        </div>
+      </a>
+
+      <!-- Desktop Stage Navigation -->
+      <nav class="hud-nav-desktop" aria-label="Primary Navigation">
+        <a href="#hero" class="hud-nav-link sound-btn">START</a>
+        <a href="#stages" class="hud-nav-link sound-btn">STAGES</a>
+        <a href="#powerups" class="hud-nav-link sound-btn">POWER-UPS</a>
+        <a href="#questlog" class="hud-nav-link sound-btn">QUEST LOG</a>
+        <a href="#arcade" class="hud-nav-link sound-btn">MINI-GAME</a>
+        <a href="#bossfight" class="hud-nav-link sound-btn">FINAL BOSS</a>
+      </nav>
+
+      <!-- HUD Right Status: Coins, SFX & CRT Toggles, Mobile Pause -->
+      <div class="hud-controls-group">
+        <div class="hud-coins-display" title="Coins Collected">
+          <span class="coin-spin">🪙</span>
+          <span id="hud-stat-coins">99</span>
+        </div>
+        <button id="hud-sound-toggle" class="hud-btn sound-btn" type="button" aria-label="Toggle Sound Effects">SFX: OFF [🔇]</button>
+        <button id="hud-crt-toggle" class="hud-btn sound-btn" type="button" aria-label="Toggle CRT Scanline Shader">CRT: ON [📺]</button>
+        <button id="hud-mobile-pause-btn" class="hud-mobile-btn sound-btn" type="button" aria-label="Open Navigation Menu">⏸ MENU</button>
+      </div>
+    </div>
+
+    <!-- Scroll XP Gauge across bottom edge of HUD -->
+    <div class="hud-scroll-meter" aria-hidden="true">
+      <div id="hud-xp-fill" class="hud-xp-fill"></div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- ⏸️ 3. MOBILE PAUSE DRAWER MENU -->
+  <!-- ========================================================================= -->
+  <aside id="mobile-pause-drawer" class="mobile-pause-drawer" aria-label="Pause Menu">
+    <div class="drawer-header">
+      <span class="drawer-title">⏸️ GAME PAUSED</span>
+      <button id="mobile-drawer-close-btn" class="drawer-close-btn" type="button">[X] RESUME</button>
+    </div>
+
+    <!-- Mobile Navigation Links -->
+    <nav class="drawer-nav-list">
+      <a href="#hero" class="mobile-nav-link sound-btn"><span class="bullet">▶</span> WORLD 1-1: TITLE SCREEN</a>
+      <a href="#stages" class="mobile-nav-link sound-btn"><span class="bullet">▶</span> STAGE SELECT (PROJECTS)</a>
+      <a href="#powerups" class="mobile-nav-link sound-btn"><span class="bullet">▶</span> POWER-UP INVENTORY (SKILLS)</a>
+      <a href="#achievements" class="mobile-nav-link sound-btn"><span class="bullet">▶</span> TROPHY ROOM</a>
+      <a href="#questlog" class="mobile-nav-link sound-btn"><span class="bullet">▶</span> QUEST LOG (TIMELINE)</a>
+      <a href="#arcade" class="mobile-nav-link sound-btn"><span class="bullet">▶</span> ARCADE RUNNER MINI-GAME</a>
+      <a href="#bossfight" class="mobile-nav-link sound-btn"><span class="bullet">▶</span> FINAL BOSS & CONTACT</a>
+    </nav>
+
+    <!-- Player Quick Stats in Mobile Drawer -->
+    <div class="drawer-stats-box">
+      <div class="drawer-stats-title">PLAYER STATS:</div>
+      <div class="drawer-stats-grid">
+        <div>LVL: <strong id="drawer-stat-lvl">99</strong></div>
+        <div>HP: <strong>9999/9999</strong></div>
+        <div>EXP: <strong id="hud-xp-percent">0%</strong></div>
+        <div>STATUS: <strong>READY</strong></div>
+      </div>
+    </div>
+
+    <!-- Mobile Sound & CRT Controls -->
+    <div class="drawer-toggles">
+      <button id="mobile-menu-sound-toggle" class="hud-btn" type="button">SFX: OFF [🔇]</button>
+      <button id="mobile-menu-crt-toggle" class="hud-btn" type="button">CRT: ON [📺]</button>
+    </div>
+  </aside>
+
+  <main>
+    <!-- ======================================================================= -->
+    <!-- 👑 4. HERO SECTION // WORLD 1-1 TITLE SCREEN -->
+    <!-- ======================================================================= -->
+    <section id="hero" class="hero-section">
+      <div class="container">
+        
+        <!-- Retro Marquee Ticker -->
+        <div class="hero-marquee-bar scroll-reveal">
+          <div class="marquee-left">
+            <span>READY PLAYER ONE // </span>
+            <span id="hero-player-class">LEVEL 99 CODE WIZARD</span>
+          </div>
+          <div class="marquee-score-pill">
+            HI-SCORE: <span id="hud-score-val">999,990</span> PTS
+          </div>
+        </div>
+
+        <!-- Hero Content Grid -->
+        <div class="hero-layout-grid">
+          <div class="hero-text-content">
+            <div class="hero-player-intro scroll-reveal">
+              <span class="blink-dot"></span>
+              <span class="pixel-pill pill-white">NEW GAME +</span>
+              <span class="pixel-pill pill-outline">100% COMPLETION</span>
+            </div>
+
+            <h1 id="hero-player-name" class="hero-main-title scroll-reveal">RISHABH</h1>
+            <p id="hero-tagline" class="hero-tagline-text scroll-reveal">FULL-STACK DEVELOPER & SOFTWARE CRAFTSMAN</p>
+            <p id="hero-player-bio" class="hero-bio-text scroll-reveal">
+              Passionate developer crafting boss-tier digital experiences, high-performance web applications, and resilient software architectures. Turning complex bugs into clean, scalable features one commit at a time.
+            </p>
+
+            <!-- Retro Action Buttons -->
+            <div class="hero-cta-buttons scroll-reveal">
+              <a href="#stages" class="retro-btn btn-primary sound-btn">
+                <span>▶ PRESS START (VIEW LEVELS)</span>
+              </a>
+              <a href="#powerups" class="retro-btn btn-secondary sound-btn">
+                <span>⚡ INVENTORY (SKILLS)</span>
+              </a>
+              <a href="#arcade" class="retro-btn btn-secondary sound-btn">
+                <span>👾 PLAY MINI-GAME</span>
+              </a>
+            </div>
+
+            <!-- RPG Quest Stats Footnote -->
+            <div class="hero-quest-stats scroll-reveal">
+              <div class="quest-stat-pill">QUEST LEVEL: <strong id="hud-stat-lvl">99</strong></div>
+              <div class="quest-stat-pill">EXP GAUGE: <strong id="hud-stat-exp">945,210 XP</strong></div>
+              <div class="quest-stat-pill">LOCATION: <strong>EARTH / REMOTE</strong></div>
+            </div>
+          </div>
+
+          <!-- Interactive Character Avatar Card -->
+          <div class="hero-avatar-card retro-box scroll-reveal">
+            <!-- Speech Bubble -->
+            <div id="hero-speech-bubble" class="avatar-speech-bubble">
+              Press Start to inspect my journey or select a Stage to preview my work!
+            </div>
+
+            <!-- Animated Pixel Character -->
+            <div id="interactive-hero-avatar" class="avatar-sprite-wrapper" title="Click me for dialogue!">
+              <svg class="pixel-avatar-art" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Retro 8-bit Rishabh Pixel Avatar SVG -->
+                <!-- Cap / Visor -->
+                <rect x="4" y="1" width="8" height="3" fill="#ffffff"/>
+                <rect x="10" y="3" width="4" height="1" fill="#ffffff"/>
+                <!-- Face -->
+                <rect x="4" y="4" width="8" height="5" fill="#ffffff"/>
+                <!-- Glasses / Eyes -->
+                <rect x="5" y="5" width="2" height="2" fill="#000000"/>
+                <rect x="8" y="5" width="2" height="2" fill="#000000"/>
+                <rect x="7" y="5" width="1" height="1" fill="#000000"/>
+                <!-- Smile -->
+                <rect x="6" y="8" width="4" height="1" fill="#000000"/>
+                <!-- Body / Jacket -->
+                <rect x="3" y="9" width="10" height="4" fill="#ffffff"/>
+                <rect x="7" y="9" width="2" height="4" fill="#000000"/>
+                <!-- Legs -->
+                <rect x="4" y="13" width="3" height="3" fill="#ffffff"/>
+                <rect x="9" y="13" width="3" height="3" fill="#ffffff"/>
+              </svg>
+            </div>
+            <div class="avatar-click-hint">[ TAP AVATAR TO CHAT ]</div>
+
+            <!-- Avatar Status Meters -->
+            <div class="avatar-status-meters">
+              <div class="mini-meter">
+                <span class="meter-label">HP</span>
+                <div class="meter-bar"><div class="meter-fill" style="width: 100%"></div></div>
+                <span class="meter-val">9999/9999</span>
+              </div>
+              <div class="mini-meter">
+                <span class="meter-label">MP</span>
+                <div class="meter-bar"><div class="meter-fill" style="width: 100%"></div></div>
+                <span class="meter-val">999/999</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 🏰 5. STAGES AS LEVELS (PROJECTS SECTION) -->
+    <!-- ======================================================================= -->
+    <section id="stages" class="stages-section">
+      <div class="container">
+        
+        <header class="section-header scroll-reveal">
+          <div class="section-pretitle">
+            <span class="pixel-pill pill-white">STAGE SELECT</span>
+            <span class="pixel-pill pill-outline">5 MAJOR DUNGEONS</span>
+          </div>
+          <h2 class="section-title">PROJECTS AS LEVELS</h2>
+          <p class="section-subtitle">
+            Explore conquered engineering realms, high-concurrency architectures, and shipped digital worlds.
+          </p>
+        </header>
+
+        <!-- Dynamically Rendered Stage Cards Container (Populated from config.js) -->
+        <div id="stages-grid-container" class="stages-grid">
+          <!-- Stage items are rendered dynamically via app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- ⚡ 6. POWER-UPS INVENTORY (SKILLS SECTION) -->
+    <!-- ======================================================================= -->
+    <section id="powerups" class="powerups-section">
+      <div class="container">
+        
+        <header class="section-header scroll-reveal">
+          <div class="section-pretitle">
+            <span class="pixel-pill pill-white">ITEM INVENTORY</span>
+            <span class="pixel-pill pill-outline">EQUIPPED ABILITIES</span>
+          </div>
+          <h2 class="section-title">SKILLS AS POWER-UPS</h2>
+          <p class="section-subtitle">
+            A battle-tested arsenal of frameworks, languages, systems, and performance boosters ready for any quest.
+          </p>
+        </header>
+
+        <!-- Dynamically Rendered Power-Up Cards Container -->
+        <div id="powerups-grid-container" class="powerups-grid">
+          <!-- Power-up items are rendered dynamically via app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 🏆 7. TROPHY ROOM // ACHIEVEMENTS SECTION -->
+    <!-- ======================================================================= -->
+    <section id="achievements" class="achievements-section">
+      <div class="container">
+        
+        <header class="section-header scroll-reveal">
+          <div class="section-pretitle">
+            <span class="pixel-pill pill-white">HALL OF FAME</span>
+          </div>
+          <h2 class="section-title">UNLOCKED TROPHIES</h2>
+          <p class="section-subtitle">
+            Milestones, awards, and legendary feats earned throughout the development odyssey.
+          </p>
+        </header>
+
+        <div id="achievements-grid-container" class="achievements-grid">
+          <!-- Rendered via app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 🗺️ 8. QUEST LOG // EXPERIENCE & JOURNEY SECTION -->
+    <!-- ======================================================================= -->
+    <section id="questlog" class="questlog-section">
+      <div class="container">
+        
+        <header class="section-header scroll-reveal">
+          <div class="section-pretitle">
+            <span class="pixel-pill pill-white">WORLD MAP</span>
+            <span class="pixel-pill pill-outline">EXPERIENCE LOG</span>
+          </div>
+          <h2 class="section-title">THE ADVENTURE TIMELINE</h2>
+          <p class="section-subtitle">
+            From tutorial island apprentice to leading high-stakes engineering campaigns.
+          </p>
+        </header>
+
+        <div id="quest-timeline-container" class="quest-timeline">
+          <!-- Rendered via app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 👾 9. ARCADE CORNER // PLAYABLE RETRO MINI-GAME -->
+    <!-- ======================================================================= -->
+    <section id="arcade" class="arcade-section">
+      <div class="container">
+        
+        <header class="section-header scroll-reveal">
+          <div class="section-pretitle">
+            <span class="pixel-pill pill-white">CO-OP ARENA</span>
+            <span class="pixel-pill pill-outline">INSERT COIN</span>
+          </div>
+          <h2 class="section-title">RISHABH'S RETRO RUNNER</h2>
+          <p class="section-subtitle">
+            Take a breather and play! Jump over bugs, evade glitches, collect coins, and boost your high score.
+          </p>
+        </header>
+
+        <!-- Arcade Cabinet Frame -->
+        <div class="arcade-cabinet-frame retro-box scroll-reveal">
+          <div class="cabinet-marquee">★ ARCADE ACTION // INSERT COIN ★</div>
+          
+          <div class="cabinet-screen-wrap">
+            <canvas id="arcade-canvas" width="480" height="240" tabindex="0" role="application" aria-label="Playable Retro Runner Game"></canvas>
+          </div>
+
+          <div class="cabinet-controls-bar">
+            <div class="cabinet-instructions">
+              DESKTOP: [SPACE] OR [UP] TO JUMP // DOUBLE JUMP ENABLED<br>
+              MOBILE: TAP SCREEN OR HIT THE JUMP BUTTON BELOW!
+            </div>
+            <button id="mobile-game-jump-btn" class="retro-btn btn-primary mobile-jump-btn" type="button">
+              JUMP! 🚀
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- ⚔️ 10. FINAL BOSS FIGHT // CONTACT & COLLABORATE -->
+    <!-- ======================================================================= -->
+    <section id="bossfight" class="boss-section">
+      <div class="container">
+        
+        <header class="section-header scroll-reveal">
+          <div class="section-pretitle">
+            <span class="pixel-pill pill-white">STAGE 05 // BOSS FIGHT</span>
+            <span class="pixel-pill pill-outline">READY FOR CO-OP</span>
+          </div>
+          <h2 class="section-title">FINAL BOSS ENCOUNTER</h2>
+          <p class="section-subtitle">
+            Got a challenging project or looking to expand your party? Initiate battle or transmit a direct message!
+          </p>
+        </header>
+
+        <div class="boss-arena-grid">
+          
+          <!-- Left: Turn-Based RPG Battle Box -->
+          <div class="rpg-battle-box retro-box scroll-reveal">
+            <!-- Boss Status Bar -->
+            <div class="boss-enemy-header">
+              <div class="boss-label">ENCOUNTER ENEMY:</div>
+              <h3 id="boss-enemy-name" class="boss-title">CHALLENGE BOSS: NEW OPPORTUNITY</h3>
+              <div class="boss-hp-track">
+                <div id="boss-enemy-hp-bar" class="boss-hp-fill"></div>
+              </div>
+              <div id="boss-enemy-hp-text" class="boss-hp-text">10,000 / 10,000 HP</div>
+            </div>
+
+            <!-- Animated Boss Sprite -->
+            <div id="boss-enemy-box" class="boss-sprite-zone">
+              <span class="boss-pixel-monster" role="img" aria-label="Boss Monster">👾</span>
+            </div>
+
+            <!-- RPG Dialog Window -->
+            <div class="boss-dialog-window">
+              <div id="boss-dialog-text" class="dialog-text">
+                A wild Opportunity appeared! What will Rishabh do?
+              </div>
+            </div>
+
+            <!-- Battle Command Actions -->
+            <div class="battle-action-buttons">
+              <button class="battle-btn sound-btn" data-action="attack" type="button">⚔️ ATTACK</button>
+              <button class="battle-btn sound-btn" data-action="magic" type="button">✨ MAGIC</button>
+              <button class="battle-btn sound-btn" data-action="item" type="button">🎒 ITEM</button>
+              <button class="battle-btn sound-btn" data-action="run" type="button">🏃 RUN</button>
+            </div>
+          </div>
+
+          <!-- Right: Arcade Contact Terminal Form -->
+          <div class="contact-terminal-box retro-box scroll-reveal">
+            <div class="terminal-header">
+              <div class="terminal-prompt-title">&gt; SENDER_TERMINAL // INITIATE TRANSMISSION</div>
+            </div>
+
+            <form id="contact-terminal-form" class="contact-terminal-form">
+              <div class="terminal-field">
+                <label for="term-sender-name" class="terminal-label">&gt; SENDER_CODENAME:</label>
+                <input type="text" id="term-sender-name" class="terminal-input" placeholder="e.g. Satoshi / Nick" required autocomplete="name">
+              </div>
+
+              <div class="terminal-field">
+                <label for="term-sender-email" class="terminal-label">&gt; RETURN_FREQUENCY (EMAIL):</label>
+                <input type="email" id="term-sender-email" class="terminal-input" placeholder="e.g. guildmaster@realm.com" required autocomplete="email">
+              </div>
+
+              <div class="terminal-field">
+                <label for="term-sender-msg" class="terminal-label">&gt; MISSION_BRIEF (MESSAGE):</label>
+                <textarea id="term-sender-msg" class="terminal-input terminal-textarea" rows="4" placeholder="Let's build something epic together..." required></textarea>
+              </div>
+
+              <button type="submit" class="retro-btn btn-primary terminal-submit-btn sound-btn">
+                <span>⚡ TRANSMIT PACKET</span>
+              </button>
+            </form>
+
+            <div id="terminal-status-log" class="terminal-status-log">
+              &gt; SYSTEM READY. Awaiting transmission input...
+            </div>
+
+            <div class="terminal-quick-links">
+              <button id="copy-email-btn" class="copy-email-btn sound-btn" type="button">
+                [ 📋 COPY EMAIL ADDRESS ]
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 🏁 11. RETRO FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="retro-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-socials">
+        <a id="footer-link-github" href="#" target="_blank" rel="noopener noreferrer" class="footer-social-link sound-btn">GITHUB</a>
+        <a id="footer-link-linkedin" href="#" target="_blank" rel="noopener noreferrer" class="footer-social-link sound-btn">LINKEDIN</a>
+        <a id="footer-link-twitter" href="#" target="_blank" rel="noopener noreferrer" class="footer-social-link sound-btn">TWITTER / X</a>
+        <a id="footer-link-email" href="#" class="footer-social-link sound-btn">EMAIL</a>
+      </div>
+
+      <div class="footer-copy">
+        CRAFTED WITH &hearts; AND 8-BIT PASSION BY <span id="footer-player-name">RISHABH</span>.<br>
+        ALL PIXELS ALIGNED. ZERO THIRD-PARTY RUNTIMES REQUIRED.
+      </div>
+
+      <div class="footer-konami-hint">
+        SECRET CHEAT CODE: &uarr; &uarr; &darr; &darr; &larr; &rarr; &larr; &rarr; B A
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- 📜 SCRIPTS (Load Order: Config -> Audio -> Game -> App Controller) -->
+  <!-- ========================================================================= -->
+  <script src="config.js"></script>
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
